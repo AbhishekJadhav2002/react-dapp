@@ -1,0 +1,88 @@
+@import "variables";
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+  padding: 1rem 0;
+  background-color: $secondary-bg-color;
+  border-bottom: 1px solid $primary-bg-color;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in-out;
+
+  @media screen and (max-width: 768px) {
+    padding: 1rem;
+  }
+
+  @media screen and (max-width: 480px) {
+    padding: 1rem 0;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 480px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    border: 1px solid transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: $link-color;
+      background-color: transparent;
+
+      p {
+        color: $link-color;
+      }
+    }
+
+    span,
+    p {
+      font-size: 0.8rem;
+      max-width: 5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    p {
+      color: #000;
+    }
+
+    @media screen and (max-width: 768px) {
+      right: 0.5rem;
+
+      span,
+      p {
+        font-size: 0.7rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      right: 0;
+
+      span,
+      p {
+        font-size: 0.6rem;
+      }
+    }
+  }
+}

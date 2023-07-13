@@ -1,0 +1,69 @@
+@import "styles/variables";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 1400px;
+  margin: 0 auto;
+  font-size: 62.5%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: $primary-bg-color;
+  }
+
+  @media screen and (min-width: 1200px) {
+    max-width: 1200px;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+code {
+  background-color: $gray;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+button {
+  background-color: $link-color;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    border-color: darken($link-color, 10%);
+    background-color: darken($link-color, 10%);
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
