@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
-import useWalletConnect from "../../hooks/useWalletConnect";
-import { SwitchNetwork } from "../../services";
+import useEthersWalletConnect from "../../hooks/useEthersWalletConnect";
 import styles from "../../styles/home/switchNetwork.module.scss";
 
 export default function SwitchNetworks(): JSX.Element {
-  const { isConnected, account } = useWalletConnect();
+  const { isConnected, account, switchChain } =
+    useEthersWalletConnect("ethers");
 
   const handleNetworkSwitch = async (chainId: number) => {
     try {
-      const switchedChainId = await SwitchNetwork(BigInt(chainId));
+      const switchedChainId = await switchChain(BigInt(chainId));
       toast.success(`Switched to ${switchedChainId}`, { autoClose: 3000 });
     } catch (error: any) {
       toast.error(error.message, { autoClose: false });
@@ -17,7 +17,7 @@ export default function SwitchNetworks(): JSX.Element {
 
   return (
     <div className={styles.switch_network}>
-      {isConnected && (
+      {isConnected ? (
         <>
           <button
             onClick={() => handleNetworkSwitch(97)}
@@ -32,6 +32,8 @@ export default function SwitchNetworks(): JSX.Element {
             Sepolia
           </button>
         </>
+      ) : (
+        <p>Not Connected</p>
       )}
     </div>
   );

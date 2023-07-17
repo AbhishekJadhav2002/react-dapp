@@ -1,15 +1,16 @@
+import { ethers } from 'ethers';
 import Web3 from 'web3';
+import GetChain from './getChain';
 
-const SwitchNetwork = async (chainId: bigint): Promise<BigInt | Error> => {
+const SwitchNetwork = async (chainId: bigint, provider: Web3 | ethers.BrowserProvider): Promise<BigInt | Error> => {
   try {
     if (window.ethereum) {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: `0x${chainId.toString(16)}` }],
       });
-      const web3 = new Web3(window.ethereum);
-      const switchedChainId = await web3.eth.getChainId();
-      return BigInt(switchedChainId);
+      const switchedChainId = await GetChain(provider);
+      return switchedChainId;
     } else
       throw new Error('No crypto wallet found. Please install MetaMask.');
   } catch (switchError: any) {

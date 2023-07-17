@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
     "@metamask/providers": "^11.1.0",
     "@types/node": "^16.18.38",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
+    "ethers": "^6.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -20,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "contracts": "typechain --target ethers-v6 --out-dir src/types/contracts 'src/configs/abi/*.json'"
   },
   "eslintConfig": {
     "extends": [
@@ -40,5 +43,9 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "devDependencies": {
+    "@typechain/ethers-v6": "^0.4.0",
+    "typechain": "^8.2.0"
+  }
 }

@@ -1,2 +1,2 @@
 export { Transaction } from './transaction';
-export { Account, Connection } from './wallet';
+export { Account, Connection, Providers } from './wallet';

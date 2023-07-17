@@ -1,9 +1,10 @@
 import { toast } from "react-toastify";
-import useWalletConnect from "../hooks/useWalletConnect";
+import useEthersWalletConnect from "../hooks/useEthersWalletConnect";
 import styles from "../styles/navbar.module.scss";
 
 export default function Navbar(): JSX.Element {
-  const { isConnected, connect, account, error } = useWalletConnect();
+  const { isConnected, connect, account, error } =
+    useEthersWalletConnect("ethers");
 
   const connectWalletHandler = async () => {
     if (isConnected) return;
