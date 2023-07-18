@@ -1,0 +1,20 @@
+[
+  {
+    "address": "0x64544969ed7EBf5f083679233325356EbE738930",
+    "chainId": 97,
+    "symbol": "USDT",
+    "decimals": 18
+  },
+  {
+    "address": "0x54FA517F05e11Ffa87f4b22AE87d91Cec0C2D7E1",
+    "chainId": 11155111,
+    "symbol": "RARETRON",
+    "decimals": 0
+  },
+  {
+    "address": "0x779877A7B0D9E8603169DdbD7836e478b4624789",
+    "chainId": 11155111,
+    "symbol": "LINK",
+    "decimals": 18
+  }
+]

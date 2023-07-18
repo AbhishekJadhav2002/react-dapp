@@ -12,7 +12,7 @@ const GetBalance = async (provider: Web3 | ethers.BrowserProvider, account: stri
     } else
       throw new Error("Invalid provider");
   } catch (error: any) {
-    return error;
+    throw new Error(error);
   }
 }
 

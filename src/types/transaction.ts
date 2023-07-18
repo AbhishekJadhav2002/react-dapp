@@ -1,7 +1,7 @@
 interface Transaction {
     from: String | Number;
-    to: String | Number | undefined;
-    value: Number | String | BigInt;
+    to: string;
+    value: string;
     gas?: Number;
     gasPrice?: Number | String | BigInt;
     data?: string;

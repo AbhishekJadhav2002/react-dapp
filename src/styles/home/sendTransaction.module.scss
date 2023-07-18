@@ -32,7 +32,7 @@
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    width: 40%;
+    width: 60%;
 
     div {
       display: flex;
@@ -61,12 +61,61 @@
     label {
       font-size: 1rem;
       font-weight: 600;
+      cursor: pointer;
     }
 
     button:disabled {
       opacity: 0.5;
       background-color: #ccc;
       cursor: not-allowed;
+    }
+
+    .radio_input_group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+
+      div {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0.5;
+
+        input {
+          all: unset;
+          position: absolute;
+          background-color: transparent;
+          cursor: pointer;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+        }
+
+        input:checked + label {
+          position: relative;
+          color: $link-color;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -1.2rem;
+            transform: translateY(-50%);
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+            background-color: $link-color;
+          }
+        }
+
+        input:disabled + label {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
     }
 
     @media screen and (max-width: 768px) {

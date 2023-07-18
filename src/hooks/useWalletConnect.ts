@@ -10,8 +10,10 @@ export default function useEthersWalletConnect(_library: Providers): Connection 
   const [account, setAccount] = useState<Account | undefined>();
   const [error, setError] = useState<Error | undefined>();
   const [provider, setProvider] = useState<ethers.BrowserProvider | Web3 | undefined>();
+  const [signer, setSigner] = useState<ethers.JsonRpcSigner | undefined>();
 
   const reset = (err?: Error) => {
+    setProvider(undefined);
     setIsConnected(false);
     setAccount(undefined);
     setError(err);
@@ -24,13 +26,21 @@ export default function useEthersWalletConnect(_library: Providers): Connection 
         reset(_provider);
       } else {
         const accounts = await GetAccounts(_provider) as string[];
-        const balance = await GetBalance(_provider, accounts[0]);
-        const chainId = await GetChain(_provider);
-        setProvider(_provider);
-        setAccount({ address: accounts[0], balance: balance as bigint, chainId: chainId as bigint });
-        setIsConnected(true);
-        setError(undefined);
-        return accounts[0];
+        if (accounts.length > 0) {
+          const balance = await GetBalance(_provider, accounts[0]);
+          const chainId = await GetChain(_provider);
+          if (_provider instanceof ethers.BrowserProvider) {
+            const signer = await _provider.getSigner(0);
+            setSigner(signer);
+          }
+          setProvider(_provider);
+          setAccount({ address: accounts[0], balance: balance as bigint, chainId: chainId as bigint });
+          setIsConnected(true);
+          setError(undefined);
+          return accounts[0];
+        } else {
+          reset();
+        }
       }
     } catch (error: any) {
       reset(error);
@@ -40,6 +50,7 @@ export default function useEthersWalletConnect(_library: Providers): Connection 
   const switchChain = async (chainId: bigint) => {
     try {
       const switchedChainId = await SwitchNetwork(chainId, provider as Web3 | ethers.BrowserProvider) as bigint;
+      await connect();
       return switchedChainId;
     } catch (error: any) {
       throw new Error(error);
@@ -49,22 +60,6 @@ export default function useEthersWalletConnect(_library: Providers): Connection 
   const disconnect = () => {
     reset();
   }
-
-  const isWalletConnected = useCallback(async () => {
-    try {
-      if (account)
-        return true;
-
-      const accounts = await GetAccounts(provider as Web3 | ethers.BrowserProvider) as string[];
-      if (accounts.length > 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error: any) {
-      return false;
-    }
-  }, [provider, account])
 
   useEffect(() => {
     try {
@@ -95,22 +90,21 @@ export default function useEthersWalletConnect(_library: Providers): Connection 
 
   useEffect(() => {
     try {
-      isWalletConnected().then(async (isConnected) => {
-        if (isConnected && account) {
-          const balance = await GetBalance(provider as Web3 | ethers.BrowserProvider, account.address as string) as bigint;
-          setAccount({ ...account, balance });
-          setIsConnected(true);
-        } else {
-          await connect();
-        }
+      connect().then().catch((error) => {
+        throw new Error(error);
       })
     } catch (error: any) {
       reset(error);
     }
-  }, [isWalletConnected, connect, account, provider])
+
+    return () => {
+      reset();
+    }
+  }, [connect])
 
   return {
     provider,
+    signer,
     account,
     connect,
     switchChain,

@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
-import useEthersWalletConnect from "../../hooks/useEthersWalletConnect";
+import { useWeb3Context } from "../../context/Web3Context";
 import styles from "../../styles/home/switchNetwork.module.scss";
+import { Connection } from "../../types";
 
 export default function SwitchNetworks(): JSX.Element {
-  const { isConnected, account, switchChain } =
-    useEthersWalletConnect("ethers");
+  const { isConnected, account, switchChain } = useWeb3Context() as Connection;
 
   const handleNetworkSwitch = async (chainId: number) => {
     try {

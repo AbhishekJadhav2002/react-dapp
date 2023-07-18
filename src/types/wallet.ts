@@ -1,4 +1,4 @@
-import { BrowserProvider } from "ethers";
+import { BrowserProvider, JsonRpcSigner } from "ethers";
 import Web3 from "web3";
 
 type Providers = "ethers" | "web3"
@@ -10,7 +10,8 @@ interface Account {
 }
 
 interface Connection {
-    provider: Web3 | BrowserProvider | undefined,
+    provider: Web3 | BrowserProvider | undefined;
+    signer: JsonRpcSigner | undefined;
     connect: () => Promise<string | Error | undefined>;
     disconnect: () => void;
     isConnected: boolean;

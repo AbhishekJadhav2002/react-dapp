@@ -1,10 +1,11 @@
 import { toast } from "react-toastify";
-import useEthersWalletConnect from "../hooks/useEthersWalletConnect";
+import { useWeb3Context } from "../context/Web3Context";
 import styles from "../styles/navbar.module.scss";
+import { Connection } from "../types";
 
 export default function Navbar(): JSX.Element {
   const { isConnected, connect, account, error } =
-    useEthersWalletConnect("ethers");
+    useWeb3Context() as Connection;
 
   const connectWalletHandler = async () => {
     if (isConnected) return;
