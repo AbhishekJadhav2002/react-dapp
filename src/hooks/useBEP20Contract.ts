@@ -13,6 +13,9 @@ const useBEP20Contract = (_token: TokenConfig) => {
 
     const transfer = async (to: string, value: string): Promise<string | Error> => {
         try {
+            if (!contract) {
+                throw new Error("Contract not found");
+            }
             setLoading(true);
             const weiValue = ethers.parseEther(value);
             const tx = await (await contract.transfer(to, weiValue)).wait();
@@ -38,16 +41,19 @@ const useBEP20Contract = (_token: TokenConfig) => {
     const getBalance = useCallback(async (address: string): Promise<bigint | Error> => {
         try {
             if (provider && account) {
-                const chainId = await GetChain(provider) as bigint;
+                const chainId = await GetChain(provider);
                 if (chainId && Number(chainId) !== token.chainId) {
                     console.log("ChainId mismatch");
                     throw new Error("ChainId mismatch");
                 }
             }
+            if (!contract) {
+                throw new Error("Contract not found");
+            }
             const balance = await contract.balanceOf(address);
             return balance;
         } catch (error: any) {
-            throw new Error(error);
+            throw error;
         }
     }, [contract, provider, account, token.chainId])
 
