@@ -24,9 +24,16 @@ const useBEP20Contract = (_token: TokenConfig) => {
         }
     }
 
-    const contract = useMemo(() =>
-        new ethers.Contract(token.address, abi, signer),
-        [token, signer])
+    const contract = useMemo(() => {
+        try {
+            if (!token.address) {
+                throw new Error("Token address not found");
+            }
+            return new ethers.Contract(token.address, abi, signer)
+        } catch (error: any) {
+            throw new Error(error);
+        }
+    }, [token, signer])
 
     const getBalance = useCallback(async (address: string): Promise<bigint | Error> => {
         try {
