@@ -1,35 +1,44 @@
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useWeb3Context } from "../../context/Web3Context";
+import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import styles from "../../styles/home/switchNetwork.module.scss";
-import { Connection } from "../../types";
 
 export default function SwitchNetworks(): JSX.Element {
-  const { isConnected, account, switchChain } = useWeb3Context() as Connection;
+  const { isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { error, isLoading, pendingChainId, switchNetwork } = useSwitchNetwork({
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
 
-  const handleNetworkSwitch = async (chainId: number) => {
-    try {
-      const switchedChainId = await switchChain(BigInt(chainId));
-      toast.success(`Switched to ${switchedChainId}`, { autoClose: 3000 });
-    } catch (error: any) {
-      toast.error(error.message, { autoClose: false });
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
     }
-  };
+
+    return () => {
+      toast.dismiss();
+    };
+  }, [error]);
 
   return (
     <div className={styles.switch_network}>
-      {isConnected ? (
+      {isConnected && chain ? (
         <>
           <button
-            onClick={() => handleNetworkSwitch(97)}
-            disabled={account?.chainId === BigInt(97)}
+            onClick={() => switchNetwork?.(97)}
+            disabled={!switchNetwork || chain?.id === 97}
           >
             BnB
+            {isLoading && pendingChainId === 97 && " (switching)"}
           </button>
           <button
-            onClick={() => handleNetworkSwitch(11155111)}
-            disabled={account?.chainId === BigInt(11155111)}
+            onClick={() => switchNetwork?.(11155111)}
+            disabled={!switchNetwork || chain?.id === 11155111}
           >
             Sepolia
+            {isLoading && pendingChainId === 11155111 && " (switching)"}
           </button>
         </>
       ) : (

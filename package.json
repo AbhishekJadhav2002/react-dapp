@@ -8,13 +8,16 @@
     "@types/node": "^16.18.38",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
-    "ethers": "^6.6.3",
+    "@web3modal/ethereum": "2.3.0",
+    "@web3modal/react": "2.3.0",
+    "ethers": "^5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.3",
     "sass": "^1.63.6",
     "typescript": "^4.9.5",
+    "wagmi": "0.12.12",
     "web-vitals": "^2.1.4",
     "web3": "^4.0.3"
   },
@@ -23,7 +26,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "contracts": "typechain --target ethers-v6 --out-dir src/types/contracts 'src/configs/abi/*.json'"
+    "contracts": "typechain --target ethers-v5 --out-dir src/types/contracts 'src/configs/abi/*.json'"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +50,7 @@
   },
   "packageManager": "yarn@3.6.1",
   "devDependencies": {
-    "@typechain/ethers-v6": "^0.4.0",
+    "@typechain/ethers-v5": "^11.1.0",
     "typechain": "^8.2.0"
   }
 }

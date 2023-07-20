@@ -2,7 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, type ContractRunner } from "ethers";
+import { Contract, Signer, utils } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { BEP20, BEP20Interface } from "../BEP20";
 
 const _abi = [
@@ -469,9 +470,9 @@ const _abi = [
 export class BEP20__factory {
   static readonly abi = _abi;
   static createInterface(): BEP20Interface {
-    return new Interface(_abi) as BEP20Interface;
+    return new utils.Interface(_abi) as BEP20Interface;
   }
-  static connect(address: string, runner?: ContractRunner | null): BEP20 {
-    return new Contract(address, _abi, runner) as unknown as BEP20;
+  static connect(address: string, signerOrProvider: Signer | Provider): BEP20 {
+    return new Contract(address, _abi, signerOrProvider) as BEP20;
   }
 }
